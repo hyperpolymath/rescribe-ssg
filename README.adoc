@@ -1,69 +1,83 @@
 = rescribe-ssg
 :toc: auto
-:toclevels: 3
+:toclevels: 2
 
-**The definitive ReScript static site generator.**
+image:https://img.shields.io/badge/RSR-compliant-gold[RSR Compliant,link=https://github.com/hyperpolymath/rhodium-standard-repositories]
+image:https://img.shields.io/badge/poly--ssg-satellite-blue[poly-ssg,link=https://github.com/hyperpolymath/poly-ssg]
+image:https://img.shields.io/badge/license-AGPL--3.0-green[License]
 
-== Overview
+**Type-safe static site generator in ReScript.**
 
-rescribe-ssg is a type-safe static site generator written in ReScript.
-It compiles to clean JavaScript while providing strong compile-time guarantees
-through OCaml's type system.
+ML-family types meet the JavaScript ecosystem.
 
-== Language Enforcement
+== Who Is This For?
 
-[IMPORTANT]
-====
-This SSG **MUST** be written in ReScript. No exceptions.
+* **ReScript developers** who love the language
+* **Former BuckleScript users** seeking modern tooling
+* **Teams wanting type safety** without leaving the JS ecosystem
+* **Anyone frustrated** by runtime type errors in Node SSGs
 
-Forbidden languages for SSG logic:
+== Why rescribe-ssg?
 
-* Python
-* Plain JavaScript
-* TypeScript (use ReScript)
-* Any language other than ReScript
+=== ML-Family Type Inference
 
-NOTE: This satellite is 100% ReScript - even the MCP adapter!
-====
+Write code naturally. Types are inferred. Errors are caught at compile time.
 
-== Features
+[source,rescript]
+----
+let buildPage = (page: page) => {
+  let html = page.content->Markdown.toHtml
+  html->Template.apply(page.frontmatter)
+}
+// Types inferred, errors caught
+----
 
-* Sound type system with inference
-* Compiles to clean, readable JavaScript
-* First-class JSX support for templates
-* Pattern matching for content routing
-* Excellent JavaScript interop
+=== Readable JavaScript Output
 
-== Requirements
+The generated JavaScript is readable and debuggable. No runtime overhead from the type system.
 
-* Node.js 18+
-* ReScript 11+
+=== Full JS Ecosystem Access
 
-== Building
+npm packages work seamlessly. Bindings are type-safe. Best of both worlds.
+
+=== Pattern Matching for Content
+
+Variant types and pattern matching make content handling elegant.
+
+== Quick Start
 
 [source,bash]
 ----
-npm install
-npm run build
-node lib/es6/src/RescribeSsg.mjs build
+# Install
+npm install -g rescribe-ssg
+
+# Create a site
+rescribe init my-site
+cd my-site
+
+# Build
+rescribe build
+
+# Watch mode
+rescribe watch
 ----
 
-== Project Structure
+== Features
 
-[source]
-----
-rescribe-ssg/
-├── src/                  # ReScript source (THE SSG)
-├── adapters/             # ReScript MCP adapter (also ReScript!)
-├── STATE.scm             # Project state
-├── ECOSYSTEM.scm         # Ecosystem position
-├── META.scm              # Architecture decisions
-└── .claude/CLAUDE.md     # AI guidelines
-----
+* **Sound type system** - if it compiles, it works
+* **Variant types** - model content precisely
+* **Pattern matching** - elegant content handling
+* **Fast compilation** - sub-second rebuilds
+* **npm compatibility** - use any JS library
+
+== Requirements
+
+* Node.js 18 or later
+* ReScript 11+
 
 == Part of poly-ssg
 
-rescribe-ssg is a satellite of the https://github.com/hyperpolymath/poly-ssg-mcp[poly-ssg-mcp] hub.
+rescribe-ssg is part of the https://github.com/hyperpolymath/poly-ssg[poly-ssg] family, unified through https://github.com/hyperpolymath/poly-ssg-mcp[MCP integration].
 
 == License
 
