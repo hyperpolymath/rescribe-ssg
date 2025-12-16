@@ -1,1 +1,70 @@
+= rescribe-ssg
+:toc: auto
+:toclevels: 3
 
+**The definitive ReScript static site generator.**
+
+== Overview
+
+rescribe-ssg is a type-safe static site generator written in ReScript.
+It compiles to clean JavaScript while providing strong compile-time guarantees
+through OCaml's type system.
+
+== Language Enforcement
+
+[IMPORTANT]
+====
+This SSG **MUST** be written in ReScript. No exceptions.
+
+Forbidden languages for SSG logic:
+
+* Python
+* Plain JavaScript
+* TypeScript (use ReScript)
+* Any language other than ReScript
+
+NOTE: This satellite is 100% ReScript - even the MCP adapter!
+====
+
+== Features
+
+* Sound type system with inference
+* Compiles to clean, readable JavaScript
+* First-class JSX support for templates
+* Pattern matching for content routing
+* Excellent JavaScript interop
+
+== Requirements
+
+* Node.js 18+
+* ReScript 11+
+
+== Building
+
+[source,bash]
+----
+npm install
+npm run build
+node lib/es6/src/RescribeSsg.mjs build
+----
+
+== Project Structure
+
+[source]
+----
+rescribe-ssg/
+├── src/                  # ReScript source (THE SSG)
+├── adapters/             # ReScript MCP adapter (also ReScript!)
+├── STATE.scm             # Project state
+├── ECOSYSTEM.scm         # Ecosystem position
+├── META.scm              # Architecture decisions
+└── .claude/CLAUDE.md     # AI guidelines
+----
+
+== Part of poly-ssg
+
+rescribe-ssg is a satellite of the https://github.com/hyperpolymath/poly-ssg-mcp[poly-ssg-mcp] hub.
+
+== License
+
+AGPL-3.0-or-later
