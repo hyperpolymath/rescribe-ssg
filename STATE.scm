@@ -20,14 +20,16 @@
   '((phase . "v1.0 - ReScript Implementation Complete")
     (overall-completion . 100)
     (components ((ReScript-engine ((status . "complete") (completion . 100)))
-                 (mcp-adapter ((status . "pending") (language . "ReScript") (completion . 0)))))))
+                 (mcp-adapter ((status . "complete") (language . "ReScript") (completion . 100)))))))
 
 (define blockers-and-issues
   '((critical ())
     (high-priority ())))
 
 (define critical-next-actions
-  '((immediate (("Connect MCP adapter in ReScript" . high)))))
+  '((immediate (("Integrate with poly-ssg-mcp hub" . medium)
+                ("Add file system operations" . medium)
+                ("Implement site build command" . medium)))))
 
 (define state-summary
   '((project . "rescribe-ssg")

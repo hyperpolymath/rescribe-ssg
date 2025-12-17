@@ -29,17 +29,14 @@ module Adapter = {
   let language = "ReScript"
   let description = "Type-safe static site generator in ReScript with JavaScript interop"
 
-  let mutable state: connectionState = Disconnected
+  let state: ref<connectionState> = ref(Disconnected)
 
   @module("child_process")
   external execSync: (string, 'options) => string = "execSync"
 
   let runCommand = (cmd: string, ~cwd: option<string>=?): commandResult => {
     try {
-      let options = switch cwd {
-      | Some(dir) => {"cwd": dir, "encoding": "utf-8"}
-      | None => {"encoding": "utf-8"}
-      }
+      let options = {"cwd": Belt.Option.getWithDefault(cwd, "."), "encoding": "utf-8"}
       let stdout = execSync(cmd, options)
       {success: true, stdout, stderr: "", code: 0}
     } catch {
@@ -56,10 +53,10 @@ module Adapter = {
     Js.Promise.make((~resolve, ~reject as _) => {
       let result = runCommand("npx rescript --version")
       if result.success {
-        state = Connected
+        state := Connected
         resolve(true)
       } else {
-        state = Disconnected
+        state := Disconnected
         resolve(false)
       }
     })
@@ -67,13 +64,13 @@ module Adapter = {
 
   let disconnect = (): Js.Promise.t<unit> => {
     Js.Promise.make((~resolve, ~reject as _) => {
-      state = Disconnected
+      state := Disconnected
       resolve()
     })
   }
 
   let isConnected = (): bool => {
-    switch state {
+    switch state.contents {
     | Connected => true
     | Disconnected => false
     }
@@ -99,7 +96,7 @@ module Adapter = {
             }
           | None => "."
           }
-          let result = runCommand("npm run build && node lib/es6/src/RescribeSsg.mjs build", ~cwd=Some(path))
+          let result = runCommand("npm run build && node lib/es6/src/RescribeSsg.mjs build", ~cwd=path)
           resolve(result)
         })
       },
@@ -118,7 +115,7 @@ module Adapter = {
             }
           | None => "."
           }
-          let result = runCommand("npx rescript", ~cwd=Some(path))
+          let result = runCommand("npx rescript", ~cwd=path)
           resolve(result)
         })
       },
@@ -137,7 +134,7 @@ module Adapter = {
             }
           | None => "."
           }
-          let result = runCommand("npx rescript clean", ~cwd=Some(path))
+          let result = runCommand("npx rescript clean", ~cwd=path)
           resolve(result)
         })
       },
