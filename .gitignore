@@ -18,7 +18,7 @@ Thumbs.db
 /out/
 
 # Dependencies
-/node_modules/
+node_modules/
 /vendor/
 /deps/
 /.elixir_ls/
@@ -38,8 +38,9 @@ erl_crash.dump
 /Manifest.toml
 
 # ReScript
-/lib/bs/
+lib/
 /.bsb.lock
+*.mjs
 
 # Python (SaltStack only)
 __pycache__/
